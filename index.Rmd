@@ -18,14 +18,38 @@ Border crisis
 
 How do changes in economic conditions in the United States impact the trends in border crossings at the US-Mexico border? Drawing from economic theory and behavioral explanations, I hypothesize that during periods of robust economic growth and increased employment opportunities in the United States, there will be a decrease in unauthorized border crossings. A stronger U.S. economy should, in theory, provide individuals with more incentives to remain in or enter the country through legal channels, such as obtaining work visas. Alternatively, when the U.S. experiences economic downturns, it may increase incentives for individuals from neighboring countries to cross the border in search of better economic opportunities. The expectation is that economic conditions can significantly influence the decisions of potential border crossers. The explanatory variable of interest is "U.S. Economic Conditions." It is measured using GDP growth rate, unemployment rate, and personal income levels. These indicators capture variations in the overall economic health of the United States over time. The outcome variable is "Border Crossings at the US-Mexico Border." It is measured by the number of apprehensions and legal crossings recorded by the U.S. Customs and Border Protection (CBP). This data represents the movement of individuals across the border. If the data shows that during periods of economic expansion, there is a statistically significant decrease in unauthorized border crossings, while during economic contractions, there is an increase in border crossings, it would support my hypothesis. This pattern would indicate that economic conditions play a role in shaping border crossing behavior. On the other hand, if the data does not exhibit any relationship between economic conditions and border crossings, or if the observed pattern contradicts our hypothesis (e.g., more border crossings during economic upturns), this would disprove my hypothesis. Such findings would suggest that economic factors alone do not explain the observed trends in border crossings and that other, possibly idiosyncratic, explanations are at play.
 
+
+
+
 ```{r}
 library(readxl)
-gdp = read_excel("gdp_data.xlsx")
-borders = read.csv("bordercrossing.csv")
+library(ggplot2)
+gdp <- read_excel("gdp_data.xlsx")
+borders <- read.csv("bordercrossing.csv")
+
 ```
+
+
 ```{r}
-gdp
+buspassengers = borders[borders$Measure == "Bus Passengers",]
+buspassengers$Value = buspassengers$Value/1000
+result = aggregate(Value ~ Year.of.Date, data = buspassengers, FUN = sum)
+result
+ggplot(result, aes(x = Year.of.Date, y = Value)) +
+  geom_bar(stat = "identity") +
+  labs(title = "Bus Passenger Border Crossings per Year (in thousands of passengers)", x = "Year.of.Date", y = "Value")
 ```
+
+```{r}
+unique(borders$Measure)
+```
+
+
+
+```{r}
+unique(borders$Port.Name)
+```
+
 
 
 
