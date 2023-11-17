@@ -24,9 +24,8 @@ How do changes in economic conditions in the United States impact the trends in 
 ```{r}
 library(readxl)
 library(ggplot2)
-gdp <- read_excel("gdp_data.xlsx")
+gdp <- read.csv("Country_GDP.csv")
 borders <- read.csv("bordercrossing.csv")
-
 ```
 
 
@@ -41,14 +40,16 @@ ggplot(result, aes(x = Year.of.Date, y = Value)) +
 ```
 
 ```{r}
-unique(borders$Measure)
+usgdp = unlist(gdp[gdp["Country.Name"]=="United States",c("X1996", "X1997", "X1998", "X1999", "X2000", "X2001", "X2002", "X2003", "X2004", "X2005", "X2006", "X2007", "X2008", "X2009", "X2010", "X2011", "X2012", "X2013", "X2014", "X2015", "X2016", "X2017", "X2018", "X2019", "X2020", "X2021", "X2022")])
 ```
-
-
-
 ```{r}
-unique(borders$Port.Name)
+ggplot() +
+  geom_point(aes(x = usgdp/1000000000, y = head(result$Value, -1))) +
+  labs(title = "GDP vs Immigration", x = "US GDP", y = "Border Crossings by Truck")
+
 ```
+In the above scatter plot, data is gathered from US GDP (in Billions) and Border Crossings by Truck. As we look at this plot, we notice a downward sloping trend, which indicates a negative relationship. There are not a lot of data points available right now, but from what we have, there appears to be a negative relationship between GDP and Border Crossings. In other words, this means that as GDP increases in any given year, border crossings into the US decrease. This does not necessarily prove a casual relationship between the two variables.
+
 
 
 

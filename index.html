@@ -115,7 +115,7 @@ code span.wa { color: #5e5e5e; font-style: italic; } /* Warning */
   <!--/radix_placeholder_rmarkdown_metadata-->
   
   <script type="text/json" id="radix-resource-manifest">
-  {"type":"character","attributes":{},"value":["bordercrossing.csv","bordercrossingdata.csv","gdp_data.xlsx","index_files/anchor-4.2.2/anchor.min.js","index_files/bowser-1.9.3/bowser.min.js","index_files/distill-2.2.21/template.v2.js","index_files/figure-html5/unnamed-chunk-2-1.png","index_files/header-attrs-2.17/header-attrs.js","index_files/header-attrs-2.21/header-attrs.js","index_files/jquery-3.6.0/jquery-3.6.0.js","index_files/jquery-3.6.0/jquery-3.6.0.min.js","index_files/jquery-3.6.0/jquery-3.6.0.min.map","index_files/popper-2.6.0/popper.min.js","index_files/tippy-6.2.7/tippy-bundle.umd.min.js","index_files/tippy-6.2.7/tippy-light-border.css","index_files/tippy-6.2.7/tippy.css","index_files/tippy-6.2.7/tippy.umd.min.js","index_files/webcomponents-2.0.0/webcomponents.js"]}
+  {"type":"character","attributes":{},"value":["~$gdp_data.xlsx","bordercrossing.csv","bordercrossingdata.csv","Country_GDP.csv","gdp_data.xlsx","index_files/anchor-4.2.2/anchor.min.js","index_files/bowser-1.9.3/bowser.min.js","index_files/distill-2.2.21/template.v2.js","index_files/figure-html5/unnamed-chunk-2-1.png","index_files/figure-html5/unnamed-chunk-4-1.png","index_files/header-attrs-2.17/header-attrs.js","index_files/header-attrs-2.21/header-attrs.js","index_files/jquery-3.6.0/jquery-3.6.0.js","index_files/jquery-3.6.0/jquery-3.6.0.min.js","index_files/jquery-3.6.0/jquery-3.6.0.min.map","index_files/popper-2.6.0/popper.min.js","index_files/tippy-6.2.7/tippy-bundle.umd.min.js","index_files/tippy-6.2.7/tippy-light-border.css","index_files/tippy-6.2.7/tippy.css","index_files/tippy-6.2.7/tippy.umd.min.js","index_files/webcomponents-2.0.0/webcomponents.js"]}
   </script>
   <!--radix_placeholder_navigation_in_header-->
   <!--/radix_placeholder_navigation_in_header-->
@@ -1527,7 +1527,7 @@ Border crisis</p>
 <div class="sourceCode">
 <pre class="sourceCode r"><code class="sourceCode r"><span><span class='kw'><a href='https://rdrr.io/r/base/library.html'>library</a></span><span class='op'>(</span><span class='va'><a href='https://readxl.tidyverse.org'>readxl</a></span><span class='op'>)</span></span>
 <span><span class='kw'><a href='https://rdrr.io/r/base/library.html'>library</a></span><span class='op'>(</span><span class='va'><a href='https://ggplot2.tidyverse.org'>ggplot2</a></span><span class='op'>)</span></span>
-<span><span class='va'>gdp</span> <span class='op'>&lt;-</span> <span class='fu'><a href='https://readxl.tidyverse.org/reference/read_excel.html'>read_excel</a></span><span class='op'>(</span><span class='st'>"gdp_data.xlsx"</span><span class='op'>)</span></span>
+<span><span class='va'>gdp</span> <span class='op'>&lt;-</span> <span class='fu'><a href='https://rdrr.io/r/utils/read.table.html'>read.csv</a></span><span class='op'>(</span><span class='st'>"Country_GDP.csv"</span><span class='op'>)</span></span>
 <span><span class='va'>borders</span> <span class='op'>&lt;-</span> <span class='fu'><a href='https://rdrr.io/r/utils/read.table.html'>read.csv</a></span><span class='op'>(</span><span class='st'>"bordercrossing.csv"</span><span class='op'>)</span></span></code></pre>
 </div>
 </div>
@@ -1576,31 +1576,19 @@ Border crisis</p>
 </div>
 <div class="layout-chunk" data-layout="l-body">
 <div class="sourceCode">
-<pre class="sourceCode r"><code class="sourceCode r"><span><span class='fu'><a href='https://rdrr.io/r/base/unique.html'>unique</a></span><span class='op'>(</span><span class='va'>borders</span><span class='op'>$</span><span class='va'>Measure</span><span class='op'>)</span></span></code></pre>
+<pre class="sourceCode r"><code class="sourceCode r"><span><span class='va'>usgdp</span> <span class='op'>=</span> <span class='fu'><a href='https://rdrr.io/r/base/unlist.html'>unlist</a></span><span class='op'>(</span><span class='va'>gdp</span><span class='op'>[</span><span class='va'>gdp</span><span class='op'>[</span><span class='st'>"Country.Name"</span><span class='op'>]</span><span class='op'>==</span><span class='st'>"United States"</span>,<span class='fu'><a href='https://rdrr.io/r/base/c.html'>c</a></span><span class='op'>(</span><span class='st'>"X1996"</span>, <span class='st'>"X1997"</span>, <span class='st'>"X1998"</span>, <span class='st'>"X1999"</span>, <span class='st'>"X2000"</span>, <span class='st'>"X2001"</span>, <span class='st'>"X2002"</span>, <span class='st'>"X2003"</span>, <span class='st'>"X2004"</span>, <span class='st'>"X2005"</span>, <span class='st'>"X2006"</span>, <span class='st'>"X2007"</span>, <span class='st'>"X2008"</span>, <span class='st'>"X2009"</span>, <span class='st'>"X2010"</span>, <span class='st'>"X2011"</span>, <span class='st'>"X2012"</span>, <span class='st'>"X2013"</span>, <span class='st'>"X2014"</span>, <span class='st'>"X2015"</span>, <span class='st'>"X2016"</span>, <span class='st'>"X2017"</span>, <span class='st'>"X2018"</span>, <span class='st'>"X2019"</span>, <span class='st'>"X2020"</span>, <span class='st'>"X2021"</span>, <span class='st'>"X2022"</span><span class='op'>)</span><span class='op'>]</span><span class='op'>)</span></span></code></pre>
 </div>
-<pre><code> [1] &quot;Bus Passengers&quot;              &quot;Buses&quot;                      
- [3] &quot;Pedestrians&quot;                 &quot;Personal Vehicle Passengers&quot;
- [5] &quot;Personal Vehicles&quot;           &quot;Rail Containers Empty&quot;      
- [7] &quot;Rail Containers Loaded&quot;      &quot;Train Passengers&quot;           
- [9] &quot;Trains&quot;                      &quot;Truck Containers Empty&quot;     
-[11] &quot;Truck Containers Loaded&quot;     &quot;Trucks&quot;                     </code></pre>
 </div>
 <div class="layout-chunk" data-layout="l-body">
 <div class="sourceCode">
-<pre class="sourceCode r"><code class="sourceCode r"><span><span class='fu'><a href='https://rdrr.io/r/base/unique.html'>unique</a></span><span class='op'>(</span><span class='va'>borders</span><span class='op'>$</span><span class='va'>Port.Name</span><span class='op'>)</span></span></code></pre>
+<pre class="sourceCode r"><code class="sourceCode r"><span><span class='fu'><a href='https://ggplot2.tidyverse.org/reference/ggplot.html'>ggplot</a></span><span class='op'>(</span><span class='op'>)</span> <span class='op'>+</span></span>
+<span>  <span class='fu'><a href='https://ggplot2.tidyverse.org/reference/geom_point.html'>geom_point</a></span><span class='op'>(</span><span class='fu'><a href='https://ggplot2.tidyverse.org/reference/aes.html'>aes</a></span><span class='op'>(</span>x <span class='op'>=</span> <span class='va'>usgdp</span><span class='op'>/</span><span class='fl'>1000000000</span>, y <span class='op'>=</span> <span class='fu'><a href='https://rdrr.io/r/utils/head.html'>head</a></span><span class='op'>(</span><span class='va'>result</span><span class='op'>$</span><span class='va'>Value</span>, <span class='op'>-</span><span class='fl'>1</span><span class='op'>)</span><span class='op'>)</span><span class='op'>)</span> <span class='op'>+</span></span>
+<span>  <span class='fu'><a href='https://ggplot2.tidyverse.org/reference/labs.html'>labs</a></span><span class='op'>(</span>title <span class='op'>=</span> <span class='st'>"GDP vs Immigration"</span>, x <span class='op'>=</span> <span class='st'>"US GDP"</span>, y <span class='op'>=</span> <span class='st'>"Border Crossings by Truck"</span><span class='op'>)</span></span></code></pre>
 </div>
-<pre><code> [1] &quot;Santa Teresa&quot;        &quot;San Ysidro&quot;          &quot;San Luis&quot;           
- [4] &quot;Roma&quot;                &quot;Presidio&quot;            &quot;Nogales&quot;            
- [7] &quot;Lukeville&quot;           &quot;Laredo&quot;              &quot;Hidalgo&quot;            
-[10] &quot;El Paso&quot;             &quot;Eagle Pass&quot;          &quot;Douglas&quot;            
-[13] &quot;Columbus&quot;            &quot;Calexico East&quot;       &quot;Brownsville&quot;        
-[16] &quot;Calexico&quot;            &quot;Sasabe&quot;              &quot;Rio Grande City&quot;    
-[19] &quot;Otay Mesa&quot;           &quot;Naco&quot;                &quot;Del Rio&quot;            
-[22] &quot;Tecate&quot;              &quot;Tornillo&quot;            &quot;Progreso&quot;           
-[25] &quot;Boquillas&quot;           &quot;Andrade&quot;             &quot;Ysleta&quot;             
-[28] &quot;Cross Border Xpress&quot;</code></pre>
+<p><img src="index_files/figure-html5/unnamed-chunk-4-1.png" width="624" /></p>
 </div>
-<div class="sourceCode" id="cb4"><pre class="sourceCode r distill-force-highlighting-css"><code class="sourceCode r"></code></pre></div>
+<p>In the above scatter plot, data is gathered from US GDP (in Billions) and Border Crossings by Truck. As we look at this plot, we notice a downward sloping trend, which indicates a negative relationship. There are not a lot of data points available right now, but from what we have, there appears to be a negative relationship between GDP and Border Crossings. In other words, this means that as GDP increases in any given year, border crossings into the US decrease. This does not necessarily prove a casual relationship between the two variables.</p>
+<div class="sourceCode" id="cb2"><pre class="sourceCode r distill-force-highlighting-css"><code class="sourceCode r"></code></pre></div>
 <!--radix_placeholder_article_footer-->
 <!--/radix_placeholder_article_footer-->
 </div>
