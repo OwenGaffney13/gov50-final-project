@@ -1,7 +1,7 @@
 ---
 title: "Gov 50 Final Project"
 author: "Owen Gaffney"
-description: "My final project"
+description: "Final Project - Immgration and the US Economy"
 output:
   distill::distill_article:
     self_contained: false
@@ -9,18 +9,15 @@ output:
 
 
 
-## Project thoughts
+## Intro
+The research question my project aims to answer is: "How do changes in economic conditions in the United States impact the trends in border crossings at the US-Mexico border?" In this project, I hypothesize that during periods of robust economic growth and increased employment opportunities in the United States, there will be a decrease in unauthorized border crossings. I theorize that a stronger U.S. economy should provide individuals with more incentives to remain in or enter the country through legal channels, such as obtaining work visas. Alternatively, when the U.S. experiences economic downturns, it may increase incentives for individuals from neighboring countries to cross the border in search of better economic opportunities. This research is especially important today, in large part due to the border crisis and economic state. Currently, our country is experiencing high inflation and high immigration. An analysis of this situation is extremely current and relevant. The expectation of my research is that economic conditions can significantly influence the decisions of potential border crossers. 
 
-I am interested in exploring data related to...
-2020 election
-NIL and Viewership
-Border crisis
+## Data Section
+In terms of my data, the explanatory variable of interest is "U.S. Economic Conditions." It is measured using GDP growth rate. This captures variations in the overall economic health of the United States over time. The outcome variable is "Border Crossings at the US-Mexico Border." It is measured by the number of unauthorized crossings recorded by the U.S. Customs and Border Protection (CBP). This data represents the movement of individuals across the border. If the data shows that during periods of economic expansion, there is a statistically significant decrease in unauthorized border crossings, while during economic contractions, there is an increase in border crossings, it would support my hypothesis. This pattern would indicate that economic conditions play a role in shaping border crossing behavior. On the other hand, if the data does not prove any relationship between economic conditions and border crossings, or if the observed pattern contradicts my hypothesis, this would disprove my hypothesis. These findings would suggest that economic factors alone do not explain the observed trends in border crossings and that other external explanations are at play.
 
-How do changes in economic conditions in the United States impact the trends in border crossings at the US-Mexico border? Drawing from economic theory and behavioral explanations, I hypothesize that during periods of robust economic growth and increased employment opportunities in the United States, there will be a decrease in unauthorized border crossings. A stronger U.S. economy should, in theory, provide individuals with more incentives to remain in or enter the country through legal channels, such as obtaining work visas. Alternatively, when the U.S. experiences economic downturns, it may increase incentives for individuals from neighboring countries to cross the border in search of better economic opportunities. The expectation is that economic conditions can significantly influence the decisions of potential border crossers. The explanatory variable of interest is "U.S. Economic Conditions." It is measured using GDP growth rate, unemployment rate, and personal income levels. These indicators capture variations in the overall economic health of the United States over time. The outcome variable is "Border Crossings at the US-Mexico Border." It is measured by the number of apprehensions and legal crossings recorded by the U.S. Customs and Border Protection (CBP). This data represents the movement of individuals across the border. If the data shows that during periods of economic expansion, there is a statistically significant decrease in unauthorized border crossings, while during economic contractions, there is an increase in border crossings, it would support my hypothesis. This pattern would indicate that economic conditions play a role in shaping border crossing behavior. On the other hand, if the data does not exhibit any relationship between economic conditions and border crossings, or if the observed pattern contradicts our hypothesis (e.g., more border crossings during economic upturns), this would disprove my hypothesis. Such findings would suggest that economic factors alone do not explain the observed trends in border crossings and that other, possibly idiosyncratic, explanations are at play.
+The first data source that I utilized was a data file from the US Department of Transportation, Bureau of Transportation statistics. This gave me the necessary information for my dependent variable, border crossings into the US, as it included number, time, day, port of entry, mode of transportation, etc. The Bureau collects this data daily, and the file is public. Next, I gathered data for my independent variable, US GDP statistics. Further, I utilized a data set titled, "Gross Domestic Product of the United States from 1990-2022" from Statista. This data set provided year by year GDP numbers in US dollars (billions).
 
-
-
-
+Below is a plot of a bar graph for bus crossings, one of the most common forms of entry, into the US from 1995 to the present. Busses allow for a greater number of individuals to cross the border, and they serve as good camouflage, disguising as cargo trucks, which cross the border consistently in large numbers every day. As we can see below, the amount of crossings takes a hit during COVID (2020), but we have seen a steady increase in bus crossing year to year since the pandemic.
 ```{r}
 library(readxl)
 library(ggplot2)
@@ -28,29 +25,47 @@ gdp <- read.csv("Country_GDP.csv")
 borders <- read.csv("bordercrossing.csv")
 ```
 
+```{r}
+result
+```
+
 
 ```{r}
 buspassengers = borders[borders$Measure == "Bus Passengers",]
-buspassengers$Value = buspassengers$Value/1000
+buspassengers$Value = buspassengers$Value/1000000
 result = aggregate(Value ~ Year.of.Date, data = buspassengers, FUN = sum)
 result
 ggplot(result, aes(x = Year.of.Date, y = Value)) +
   geom_bar(stat = "identity") +
-  labs(title = "Bus Passenger Border Crossings per Year (in thousands of passengers)", x = "Year.of.Date", y = "Value")
+  labs(title = "Bus Passenger Border Crossings per Year (in millions of passengers)", x = "Year.of.Date", y = "Value")
 ```
-
+## Results
 ```{r}
 usgdp = unlist(gdp[gdp["Country.Name"]=="United States",c("X1996", "X1997", "X1998", "X1999", "X2000", "X2001", "X2002", "X2003", "X2004", "X2005", "X2006", "X2007", "X2008", "X2009", "X2010", "X2011", "X2012", "X2013", "X2014", "X2015", "X2016", "X2017", "X2018", "X2019", "X2020", "X2021", "X2022")])
 ```
 ```{r}
+border_crossings = head(result$Value, -1)
+usgdp_billions = usgdp/1000000000
 ggplot() +
-  geom_point(aes(x = usgdp/1000000000, y = head(result$Value, -1))) +
+  geom_point(aes(x = usgdp_billions, y = border_crossings)) +
   labs(title = "GDP vs Immigration", x = "US GDP", y = "Border Crossings by Truck")
 
 ```
-In the above scatter plot, data is gathered from US GDP (in Billions) and Border Crossings by Truck. As we look at this plot, we notice a downward sloping trend, which indicates a negative relationship. There are not a lot of data points available right now, but from what we have, there appears to be a negative relationship between GDP and Border Crossings. In other words, this means that as GDP increases in any given year, border crossings into the US decrease. This does not necessarily prove a casual relationship between the two variables.
 
+In the above scatter plot, data is gathered from US GDP (in Billions) and Border Crossings by Truck. Looking at this plot, I notice a downward sloping trend, which indicates a negative relationship. There are not a lot of data points available right now, but from what is available, there appears to be a negative relationship between GDP and Border Crossings. In other words, this means that as GDP increases in any given year, border crossings into the US decrease. This does not necessarily prove a casual relationship between the two variables.
 
+```{r}
+fit = lm(border_crossings ~ usgdp_billions)
+fit
+```
+```{r}
+library(broom)
+glance(fit)
+```
+In terms of the regression analysis above, the coefficient for GDP is negative (-0.000118), which makes sense when looking at the scatter plot. This means that a one unit increase in billions of dollars will lead to a 0.000118 decrease in millions of border crossings (or 118 border crossings) by truck. Further, the R squared is 0.527, meaning that 52.7% of the variants in US GDP accounts for the variants in border crossings by truck. This indicates a relatively stable relationship. While this is encouraging, more data/variables are required to complete a stronger assessment about my hypothesis. 
+
+## Conclusion 
+In terms of my hypothesis, as GDP grows, border crossings decrease, which is consistent with my original hypothesis. This may be because better overall working conditions could inspire immigrants to come in legally via working visas. While we only have data from 1995 to 2022, it would be helpful to get additional data from prior years to further bolster my hypothesis. In terms of the dependent variable (border crossings by truck), we could further investigate other modes of border crossings besides trucks to see if this relationship holds. With more time and money, it would be helpful to understand more clearly the prevalent modes of unauthorized crossings at the border other than trucks; moreover, economic data, such as unemployment rates in areas popular to unauthorized immigrants, would allow the study to take a step further in its analysis. In conclusion, analyzing the reality of border crossings and the effects of the economy provides interesting insight to a very current situation in our country.
 
 
 
